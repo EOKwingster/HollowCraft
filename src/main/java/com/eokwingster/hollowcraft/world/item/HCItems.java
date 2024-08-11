@@ -26,7 +26,7 @@ public class HCItems {
 
     private static Supplier<NailItem> nailItemWithTab(String name, float damage) {
         Supplier<NailItem> nail = ITEMS.register(name, () -> new NailItem(
-                HCTiers.NAIL, new Item.Properties().attributes(NailItem.createAttributes(HCTiers.NAIL, damage, -2F))
+                HCTiers.NAIL, new Item.Properties().attributes(NailItem.createAttributes(damage))
         ));
         ITEM_SUPPLIERS.add(nail);
         return nail;

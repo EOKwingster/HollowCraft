@@ -10,7 +10,9 @@ import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import static com.eokwingster.hollowcraft.HollowCraft.MODID;
 
 @EventBusSubscriber(modid = MODID)
-public class CriticalDamageHandler {
+public class NailServerHandler {
+
+    //make nails no critical damage
     @SubscribeEvent
     private static void criticalDamage(CriticalHitEvent event) {
         if (event.isCriticalHit()) {

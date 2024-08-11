@@ -5,6 +5,7 @@ import com.eokwingster.hollowcraft.world.item.HCItems;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 
 @Mod(HollowCraft.MODID)
 public class HollowCraft
@@ -14,5 +15,7 @@ public class HollowCraft
     public HollowCraft(IEventBus bus, ModContainer modContainer) {
         HCCreativeModeTabs.CREATIVE_MODE_TABS.register(bus);
         HCItems.ITEMS.register(bus);
+
+        modContainer.registerConfig(ModConfig.Type.COMMON, HCConfig.CONFIG);
     }
 }
