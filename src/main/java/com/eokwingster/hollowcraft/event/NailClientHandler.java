@@ -28,7 +28,7 @@ public class NailClientHandler {
     @SubscribeEvent
     private static void interactionKey(InputEvent.InteractionKeyMappingTriggered event) {
         if (event.isAttack()) {
-            var player = Minecraft.getInstance().player;
+            LocalPlayer player = Minecraft.getInstance().player;
             if (player != null && player.getItemInHand(event.getHand()).is(HCItemTags.NAIL) && player.getAttackStrengthScale(0F) < 1) {
                 event.setSwingHand(false);
                 event.setCanceled(true);

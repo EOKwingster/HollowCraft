@@ -1,6 +1,7 @@
 package com.eokwingster.hollowcraft.world.item;
 
 import com.eokwingster.hollowcraft.HCConfig;
+import com.eokwingster.hollowcraft.client.gui.LookingDirectionIndicator;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
@@ -21,8 +22,7 @@ public class NailItem extends SwordItem {
 
     @Override
     public void postHurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
-        float xRot = pAttacker.getXRot();
-        bounce = xRot > HCConfig.bounceXRot;
+        bounce = LookingDirectionIndicator.lookingDirection == LookingDirectionIndicator.LookingDirection.DOWNWARD;
     }
 
     public static ItemAttributeModifiers createAttributes(float damage) {
