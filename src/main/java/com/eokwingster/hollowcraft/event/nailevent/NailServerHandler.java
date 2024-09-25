@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.event;
+package com.eokwingster.hollowcraft.event.nailevent;
 
 import com.eokwingster.hollowcraft.tags.HCItemTags;
 import net.minecraft.world.InteractionHand;

@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.event;
+package com.eokwingster.hollowcraft.event.nailevent;
 
 import com.eokwingster.hollowcraft.tags.HCItemTags;
 import com.eokwingster.hollowcraft.world.item.NailItem;
@@ -19,8 +19,6 @@ public class NailClientHandler {
     @SubscribeEvent
     private static void clientTickPost(ClientTickEvent.Post event) {
         LocalPlayer localPlayer = Minecraft.getInstance().player;
-        if (localPlayer == null) return;
-
         NailItem.tickNailBounce(localPlayer);
     }
 

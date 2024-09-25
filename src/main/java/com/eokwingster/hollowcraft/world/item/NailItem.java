@@ -1,7 +1,7 @@
 package com.eokwingster.hollowcraft.world.item;
 
 import com.eokwingster.hollowcraft.HCConfig;
-import com.eokwingster.hollowcraft.client.gui.LookingDirectionIndicator;
+import com.eokwingster.hollowcraft.client.gui.hud.LookingDirectionIndicator;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;

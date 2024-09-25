@@ -1,5 +1,6 @@
-package com.eokwingster.hollowcraft.client.keymapping;
+package com.eokwingster.hollowcraft.event.keymappingevent;
 
+import com.eokwingster.hollowcraft.client.keymapping.HCKeyMappings;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -11,6 +12,7 @@ import static com.eokwingster.hollowcraft.HollowCraft.MODID;
 public class KeyRegistryHandler {
     @SubscribeEvent
     private static void registerKeyMappings(RegisterKeyMappingsEvent event) {
-
+        event.register(HCKeyMappings.KEY_SPELL);
+        event.register(HCKeyMappings.KEY_ABILITY);
     }
 }

@@ -16,13 +16,22 @@ public class HCLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         //key category
         add(HCKeyMappings.CATEGORY_HOLLOWSKILLS, "Hollow Skills");
+
         //keys
+
 
         //creative mod tabs
         add(HCCreativeModeTabs.TAB_HOLLOW_CRAFT.get().getDisplayName().getString(), "Hollow Craft");
+
         //items
         add(HCItems.OLD_NAIL.get(), "Old Nail");
         add(HCItems.KNIGHT_HEAD.get(), "Knight Head");
+
+        //messages
+        add("network.hollowCraft.exception", "Network Exception!");
+        add("commands.hollowCraft.setSoul", "Soul set to: ");
+        add("commands.hollowCraft.setSoulVessel", "Soul Vessel set to: ");
+        add("commands.hollowCraft.getSoul", "Soul: ");
     }
 
     private void addKey(KeyMapping key, String name) {

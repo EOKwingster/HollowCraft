@@ -1,7 +1,5 @@
 package com.eokwingster.hollowcraft;
 
-import com.eokwingster.hollowcraft.client.gui.LookingDirectionIndicator;
-import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class HCConfig {
@@ -12,46 +10,72 @@ public class HCConfig {
             .push("viewAngles");
 
     private static final ModConfigSpec.IntValue LOOK_DOWNWARD_ANGLE = BUILDER_VIEWANGLES
-            .comment("Angle range between vertical downward view and view angle that is judged to be downward looking.",
-                    "Vertical downward is 0, parallel forward is 90. The default value 30 means the range 0 ~ 30.")
+            .comment("The angle range between vertical downward view and view angle will be seen as looking downward.",
+                    "The default value 30 means the range 0 ~ 30. (Vertical downward is 0, parallel forward is 90).")
             .defineInRange("lookDownwardAngle", 30, 0, 90);
 
     private static final ModConfigSpec.IntValue LOOK_FORWARD_ANGLE = BUILDER_VIEWANGLES
-            .comment("Angle range between parallel forward looking angle and view angle that is judged to be forward looking.")
-            .comment("parallel forward is 0, vertical downward is -90, vertical upward is 90. The default value 30 means the range -30 ~ 30")
+            .comment("The angle range between parallel forward view and this view angle will be seen as looking forward.")
+            .comment("The default value 30 means the range -30 ~ 30 (Parallel forward is 0, vertical downward is -90, vertical upward is 90).")
             .defineInRange("lookForwardAngle", 30, 0, 90);
 
     private static final ModConfigSpec.IntValue LOOK_UPWARD_ANGLE = BUILDER_VIEWANGLES
-            .comment("Angle range between vertical upward view and view angle that is judged to be upward looking.")
-            .comment("Vertical upward is 0, parallel forward is 90. The default value 30 means the range 0 ~ 30.")
+            .comment("The angle range between vertical upward view and this view angle will be seen as looking upward.")
+            .comment("The default value 30 means the range 0 ~ 30 (Vertical upward is 0, parallel forward is 90).")
             .defineInRange("lookUpwardAngle", 30, 0, 90);
 
     //gui
     private static final ModConfigSpec.Builder BUILDER_GUI = BUILDER_VIEWANGLES
             .pop()
-            .comment("GUI settings for: looking direction indicator")
+            .comment("GUI settings for: looking direction indicator, soul meter and soul vessel")
             .push("gui");
 
     private static final ModConfigSpec.IntValue LDI_SCALE = BUILDER_GUI
             .comment("The size of the indicator of looking direction")
-            .defineInRange("lookingDirectionIndicatorScale", 3, 1, 8);
+            .defineInRange("lookingDirectionIndicatorScale", 4, 1, 8);
 
-    private static final ModConfigSpec.EnumValue<LookingDirectionIndicator.POSITION> LDI_POSITION = BUILDER_GUI
-            .comment("The position of the looking direction indicator.")
-            .defineEnum("lookingDirectionIndicatorPosition", LookingDirectionIndicator.POSITION.BOTTOM_LEFT);
+    private static final ModConfigSpec.IntValue LDI_X = BUILDER_GUI
+            .comment("The pixel horizontal distance from the looking direction indicator to the left side of window.")
+            .defineInRange("lookingDirectionIndicatorX", 20, 0, 9999);
 
-    private static final ModConfigSpec.IntValue LDI_X_OFFSET = BUILDER_GUI
-            .comment("The pixel horizontal distance from the looking direction indicator to the window side it near to.",
-                    "The side it near to depends on its position. TOP_LEFT is near to the left window side.")
-            .defineInRange("lookingDirectionIndicatorXOffset", 20, 0, 9999);
+    private static final ModConfigSpec.IntValue LDI_Y = BUILDER_GUI
+            .comment("The pixel vertical distance from the looking direction indicator to the top side of window.")
+            .defineInRange("lookingDirectionIndicatorY", 160, 0, 9999);
 
-    private static final ModConfigSpec.IntValue LDI_Y_OFFSET = BUILDER_GUI
-            .comment("The pixel vertical distance from the looking direction indicator to the window side it near to.",
-                    "The side it near to depends on its position. TOP_LEFT is near to the top window side.")
-            .defineInRange("lookingDirectionIndicatorYOffset", 20, 0, 9999);
+    private static final ModConfigSpec.IntValue SM_SCALE = BUILDER_GUI
+            .comment("The size of the soul meter")
+            .defineInRange("soulMeterScale", 4, 1, 8);
+
+    private static final ModConfigSpec.IntValue SM_X = BUILDER_GUI
+            .comment("The pixel horizontal distance from the soul meter to the left side of window.")
+            .defineInRange("soulMeterX", 20, 0, 9999);
+
+    private static final ModConfigSpec.IntValue SM_Y = BUILDER_GUI
+            .comment("The pixel vertical distance from the soul meter to the top side of window.")
+            .defineInRange("soulMeterY", 20, 0, 9999);
+
+    //soul
+    private static final ModConfigSpec.Builder BUILDER_SOUL = BUILDER_GUI
+            .pop()
+            .comment("The configs about the soul of the player, this section need restart of the game")
+            .push("soul");
+
+    private static final ModConfigSpec.IntValue SOUL_METER_CAPACITY = BUILDER_SOUL
+            .comment("The max amount of the soul that the soul meter can save",
+                    "soul meter is the circular meter that fills up with white liquid, revealing two eye holes and giving the meter the appearance of a face")
+            .defineInRange("soulMeterCapacity", 99, 0, 9999);
+
+    private static final ModConfigSpec.IntValue SOUL_VESSEL_CAPACITY = BUILDER_SOUL
+            .comment("The max amount of the soul that the soul vessel can save",
+                    "Soul vessels are additional storage for soul, represented as small circles around the soul meter.")
+            .defineInRange("soulVesselCapacity", 33, 0, 9999);
+
+    private static final ModConfigSpec.BooleanValue KEEP_SOUL = BUILDER_SOUL
+            .comment("Whether your soul should be kept when you respawn if the gamerule keepInventory is true.")
+            .define("keepSoul", false);
 
     //skills
-    private static final ModConfigSpec.Builder BUILDER_SKILLS = BUILDER_GUI
+    private static final ModConfigSpec.Builder BUILDER_SKILLS = BUILDER_SOUL
             .pop()
             .comment("The configs control the behaviour of skills")
             .push("skills");
@@ -73,24 +97,39 @@ public class HCConfig {
 
     //gui
     public static int lookingDirectionIndicatorScale;
-    public static LookingDirectionIndicator.POSITION lookingDirectionIndicatorPosition;
-    public static int lookingDirectionIndicatorXOffset;
-    public static int lookingDirectionIndicatorYOffset;
+    public static int lookingDirectionIndicatorX;
+    public static int lookingDirectionIndicatorY;
+
+    public static int soulMeterScale;
+    public static int soulMeterX;
+    public static int soulMeterY;
+
+    //soul
+    public static int soulMeterCapacity;
+    public static int soulVesselCapacity;
+    public static boolean keepSoul;
 
     //skills
     public static double bounceStrength;
     public static float nailAttackSpeed;
 
     public static void initConfig() {
+        //viewAngles
         lookDownwardAngle = LOOK_DOWNWARD_ANGLE.get();
         lookForwardAngle = LOOK_FORWARD_ANGLE.get();
         lookUpwardAngle = LOOK_UPWARD_ANGLE.get();
-
+        //gui
         lookingDirectionIndicatorScale = LDI_SCALE.get();
-        lookingDirectionIndicatorPosition = LDI_POSITION.get();
-        lookingDirectionIndicatorXOffset = LDI_X_OFFSET.get();
-        lookingDirectionIndicatorYOffset = LDI_Y_OFFSET.get();
-
+        lookingDirectionIndicatorX = LDI_X.get();
+        lookingDirectionIndicatorY = LDI_Y.get();
+        soulMeterScale = SM_SCALE.get();
+        soulMeterX = SM_X.get();
+        soulMeterY = SM_Y.get();
+        //soul
+        soulMeterCapacity = SOUL_METER_CAPACITY.get();
+        soulVesselCapacity = SOUL_VESSEL_CAPACITY.get();
+        keepSoul = KEEP_SOUL.get();
+        //skills
         bounceStrength = BOUNCE_STRENGTH.get();
         nailAttackSpeed = NAIL_ATTACK_SPEED.get().floatValue();
     }

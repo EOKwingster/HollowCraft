@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.client.gui;
+package com.eokwingster.hollowcraft.client.gui.hud;
 
 import com.eokwingster.hollowcraft.HCConfig;
 import com.eokwingster.hollowcraft.tags.HCItemTags;
@@ -65,27 +65,13 @@ public class LookingDirectionIndicator implements LayeredDraw.Layer {
                         int i = 9 - HCConfig.lookingDirectionIndicatorScale;
                         int spriteWidth = 200 / i;
                         int spriteHeight = 360 / i;
-                        //set offsets of sprites
+
+                        //set sprite's position
                         int guiWidth = pGuiGraphics.guiWidth();
                         int guiHeight = pGuiGraphics.guiHeight();
-                        int xOffset1 = HCConfig.lookingDirectionIndicatorXOffset;
-                        int yOffset1 = HCConfig.lookingDirectionIndicatorYOffset;
-                        int xOffset = Math.min(xOffset1, guiWidth - spriteWidth);
-                        int yOffset = Math.min(yOffset1, guiHeight - spriteHeight);
-                        //set sprite's position
-                        int spriteX;
-                        int spriteY;
-                        POSITION indicatorPosition = HCConfig.lookingDirectionIndicatorPosition;
-                        if (indicatorPosition.isLeft()) {
-                            spriteX = xOffset;
-                        } else {
-                            spriteX = guiWidth - xOffset - spriteWidth;
-                        }
-                        if (indicatorPosition.isTop()) {
-                            spriteY = yOffset;
-                        } else {
-                            spriteY = guiHeight - yOffset - spriteHeight;
-                        }
+                        int spriteX = Math.min(HCConfig.lookingDirectionIndicatorX, guiWidth - spriteWidth);
+                        int spriteY = Math.min(HCConfig.lookingDirectionIndicatorY, guiHeight - spriteHeight);
+
                         //set the sprite
                         ResourceLocation sprite;
                         switch (lookingDirection) {
@@ -93,11 +79,13 @@ public class LookingDirectionIndicator implements LayeredDraw.Layer {
                             case DOWNWARD -> sprite = LOOKING_DIRECTION_INDICATOR_DOWNWARD_SPRITE;
                             case FORWARD -> sprite = LOOKING_DIRECTION_INDICATOR_FORWARD_SPRITE;
                             default -> {
+                                //blit darkly if void direction
                                 sprite = lastSprite;
                                 pGuiGraphics.setColor(0.2F, 0.2F, 0.2F, 0.7F);
                             }
                         }
                         lastSprite = sprite;
+
                         //set sprite's direction;
                         int spriteCenterX = spriteX + spriteWidth / 2;
                         boolean inRightHalf = spriteCenterX > guiWidth / 2;
@@ -127,26 +115,5 @@ public class LookingDirectionIndicator implements LayeredDraw.Layer {
     @OnlyIn(Dist.CLIENT)
     public enum LookingDirection {
         VOID, UPWARD, DOWNWARD, FORWARD
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public enum POSITION {
-        TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT;
-
-        public boolean isLeft() {
-            return this == TOP_LEFT || this == BOTTOM_LEFT;
-        }
-
-        public boolean isRight() {
-            return this == BOTTOM_RIGHT || this == TOP_RIGHT;
-        }
-
-        public boolean isTop (){
-            return this == TOP_LEFT || this == TOP_RIGHT;
-        }
-
-        public boolean isBottom() {
-            return this == BOTTOM_LEFT || this == BOTTOM_RIGHT;
-        }
     }
 }

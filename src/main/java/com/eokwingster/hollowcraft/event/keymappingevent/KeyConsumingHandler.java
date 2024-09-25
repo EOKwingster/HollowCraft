@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.client.keymapping;
+package com.eokwingster.hollowcraft.event.keymappingevent;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -12,6 +12,6 @@ public class KeyConsumingHandler {
     
     @SubscribeEvent
     private static void clientTickPost(ClientTickEvent.Post event) {
-
+        //consume skill
     }
 }
