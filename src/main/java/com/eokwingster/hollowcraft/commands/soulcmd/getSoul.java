@@ -1,6 +1,6 @@
 package com.eokwingster.hollowcraft.commands.soulcmd;
 
-import com.eokwingster.hollowcraft.skills.Soul;
+import com.eokwingster.hollowcraft.skills.soul.Soul;
 import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;

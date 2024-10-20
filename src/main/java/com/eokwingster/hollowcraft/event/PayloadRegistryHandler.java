@@ -1,5 +1,6 @@
 package com.eokwingster.hollowcraft.event;
 
+import com.eokwingster.hollowcraft.network.SpellData;
 import com.eokwingster.hollowcraft.network.SoulData;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,6 +19,12 @@ public class PayloadRegistryHandler {
                 SoulData.TYPE,
                 SoulData.STREAM_CODEC,
                 SoulData::clientHandler
+        );
+
+        registrar.playToServer(
+                SpellData.TYPE,
+                SpellData.STREAM_CODEC,
+                SpellData::serverHandler
         );
     }
 }

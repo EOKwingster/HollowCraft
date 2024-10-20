@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.skills;
+package com.eokwingster.hollowcraft.skills.soul;
 
 import com.eokwingster.hollowcraft.HCConfig;
 import net.minecraft.core.HolderLookup;

@@ -1,8 +1,10 @@
 package com.eokwingster.hollowcraft.event.skillevent;
 
 import com.eokwingster.hollowcraft.HCConfig;
-import com.eokwingster.hollowcraft.skills.Soul;
+import com.eokwingster.hollowcraft.skills.soul.Soul;
 import com.eokwingster.hollowcraft.network.SoulData;
+import com.eokwingster.hollowcraft.skills.spells.Focus;
+import com.eokwingster.hollowcraft.skills.spells.PlayerSpells;
 import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +17,8 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.List;
+
 import static com.eokwingster.hollowcraft.HollowCraft.MODID;
 
 @EventBusSubscriber(modid = MODID)
@@ -24,11 +28,15 @@ public class GameEventsHandler {
         Entity entity = event.getEntity();
         Level level = event.getLevel();
 
-        //sync soul when player joining the level
         if (!level.isClientSide()) {
             if (entity instanceof ServerPlayer player) {
-                Soul soulAttach = entity.getData(HCAttachmentTypes.SOUL);
+                //sync soul when player joining the level
+                Soul soulAttach = player.getData(HCAttachmentTypes.SOUL);
                 PacketDistributor.sendToPlayer(player, new SoulData(soulAttach.writeNBT()));
+
+                //give players spell: focus when they join level
+                List<Integer> playerSpells = player.getData(HCAttachmentTypes.SPELLS).playerSpells;
+                PlayerSpells.addSpell(playerSpells, Focus.INSTANCE);
             }
         }
     }
