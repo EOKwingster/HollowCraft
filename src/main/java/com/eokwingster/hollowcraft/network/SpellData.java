@@ -15,7 +15,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 import static com.eokwingster.hollowcraft.HollowCraft.MODID;
@@ -49,8 +48,8 @@ public record SpellData(String lookingDirection, int keyDownTime) implements Cus
             List<Integer> playerSpells = player.getData(HCAttachmentTypes.SPELLS).playerSpells;
 
             ISpell spell;
-            Function<ISpell, ISpell> hasOrNull = pSpell -> PlayerSpells.hasSpell(playerSpells, pSpell) ? pSpell : null;
-            if (keyDowntime < 0) {
+            Function<ISpell, ISpell> ifPlayerHas = pSpell -> PlayerSpells.hasSpell(playerSpells, pSpell) ? pSpell : null;
+            if (keyDowntime <= 5) {
                 spell = switch (data.lookingDirection()) {
                     case "forward" -> null;
                     case "downward" -> null;
@@ -58,7 +57,7 @@ public record SpellData(String lookingDirection, int keyDownTime) implements Cus
                     default -> null;
                 };
             } else {
-                spell = hasOrNull.apply(Focus.INSTANCE);
+                spell = ifPlayerHas.apply(Focus.INSTANCE);
             }
             if (spell != null) {
                 spell.release(player, keyDowntime);

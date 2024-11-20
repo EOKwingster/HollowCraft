@@ -1,0 +1,15 @@
+{
+  "focus_charging": {
+    "sounds": [
+      {
+        "name": "hollowcraft:focus_charging",
+        "stream": true
+      }
+    ]
+  },
+  "focus_heal": {
+    "sounds": [
+      "hollowcraft:focus_heal"
+    ]
+  }
+}
