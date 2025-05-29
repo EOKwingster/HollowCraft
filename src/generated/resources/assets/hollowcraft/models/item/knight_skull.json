@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "hollowcraft:item/knight_head"
+    "layer0": "hollowcraft:item/knight_skull"
   }
 }

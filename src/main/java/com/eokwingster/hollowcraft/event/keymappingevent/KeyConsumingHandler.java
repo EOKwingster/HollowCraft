@@ -65,9 +65,11 @@ public class KeyConsumingHandler {
 
             spellKeyDownTime++;
         } else {
-            //instant spells logic
+            // instant spells logic
             if (spellKeyDownTime > 0 && spellKeyDownTime <= 5) {
                 PacketDistributor.sendToServer(SpellData.make(LookingDirectionIndicator.lookingDirection, spellKeyDownTime));
+
+            // handle releasing spell key for focus
             } else if (focusChargingSound != null) {
                 focusChargingSound.fadeOut();
                 focusChargingSound = null;

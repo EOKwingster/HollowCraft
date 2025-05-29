@@ -18,14 +18,16 @@ public class HCLanguageProvider extends LanguageProvider {
         add(HCKeyMappings.CATEGORY_HOLLOWSKILLS, "Hollow Skills");
 
         //keys
-
+        addKey(HCKeyMappings.KEY_ABILITY, "Ability");
+        addKey(HCKeyMappings.KEY_SPELL, "Spell");
 
         //creative mod tabs
         add(HCCreativeModeTabs.TAB_HOLLOW_CRAFT.get().getDisplayName().getString(), "Hollow Craft");
 
         //items
         add(HCItems.OLD_NAIL.get(), "Old Nail");
-        add(HCItems.KNIGHT_HEAD.get(), "Knight Head");
+        add(HCItems.KNIGHT_SKULL.get(), "Knight Skull");
+        add(HCItems.SHADE_SPAWN_EGG.get(), "Shade");
 
         //messages
         add("network.hollowCraft.exception", "Network Exception!");

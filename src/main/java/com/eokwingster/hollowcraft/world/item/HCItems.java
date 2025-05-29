@@ -1,6 +1,9 @@
 package com.eokwingster.hollowcraft.world.item;
 
+import com.eokwingster.hollowcraft.world.entity.HCEntityTypes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
@@ -14,12 +17,15 @@ public class HCItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
 
     public static final Supplier<NailItem> OLD_NAIL = nailItemWithTab("old_nail", 5F);
+    public static final Supplier<Item> SHADE_SPAWN_EGG = itemWithTab("shade_spawn_egg", () -> new SpawnEggItem(
+            HCEntityTypes.SHADE_ENTITY_TYPE.get(), 0, 3289650, new Item.Properties()
+    ));
 
     //creative mode tab image
-    public static final Supplier<Item> KNIGHT_HEAD = ITEMS.register("knight_head", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> KNIGHT_SKULL = ITEMS.register("knight_skull", () -> new Item(new Item.Properties()));
 
     private static<T extends Item> Supplier<T> itemWithTab(String name, Supplier<T> sup) {
-        var item = ITEMS.register(name, sup);
+        DeferredItem<T> item = ITEMS.register(name, sup);
         ITEM_SUPPLIERS.add(item);
         return item;
     }
