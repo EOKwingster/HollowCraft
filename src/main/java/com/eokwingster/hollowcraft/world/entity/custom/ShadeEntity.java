@@ -23,7 +23,7 @@ public class ShadeEntity extends FlyingMob implements Enemy {
     private static final EntityDataAccessor<Boolean> DATA_FROM_PLAYER = SynchedEntityData.defineId(ShadeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_SOUL = SynchedEntityData.defineId(ShadeEntity.class, EntityDataSerializers.INT);
 
-    public final AnimationState restState = new AnimationState();
+    public final AnimationState idleState = new AnimationState();
 
     public ShadeEntity(EntityType<? extends FlyingMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -59,6 +59,17 @@ public class ShadeEntity extends FlyingMob implements Enemy {
     @Override
     public void tick() {
         super.tick();
-        restState.startIfStopped(tickCount);
+        idleState.startIfStopped(tickCount);
+    }
+
+    public static int disToPlayerComparator(ShadeEntity e1, ShadeEntity e2, Player player) {
+        double disDiff = e1.distanceToSqr(player) - e2.distanceToSqr(player);
+        if (disDiff < 0) {
+            return -1;
+        } else if (disDiff > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

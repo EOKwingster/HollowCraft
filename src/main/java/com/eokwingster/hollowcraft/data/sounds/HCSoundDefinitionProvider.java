@@ -15,16 +15,16 @@ public class HCSoundDefinitionProvider extends SoundDefinitionsProvider {
     @Override
     public void registerSounds() {
         add(HCSoundEvents.FOCUS_CHARGING, SoundDefinition.definition()
-                .with(
-                        sound(HCSoundEvents.FOCUS_CHARGING.get().getLocation())
-                                .stream()
-                )
+                .with(sound(HCSoundEvents.FOCUS_CHARGING.get().getLocation()).stream())
         );
-
         add(HCSoundEvents.FOCUS_HEAL, SoundDefinition.definition()
-                .with(
-                        sound(HCSoundEvents.FOCUS_HEAL.get().getLocation())
-                )
+                .with(sound(HCSoundEvents.FOCUS_HEAL.get().getLocation()))
+        );
+        add(HCSoundEvents.SWORD_HIT_REJECT, SoundDefinition.definition()
+                .with(sound(HCSoundEvents.SWORD_HIT_REJECT.get().getLocation()))
+        );
+        add(HCSoundEvents.SHADE_IDLE, SoundDefinition.definition()
+                .with(sound(HCSoundEvents.SHADE_IDLE.get().getLocation()).stream())
         );
     }
 }

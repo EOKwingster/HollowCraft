@@ -122,8 +122,8 @@ public class ShadeModel<T extends Entity> extends HierarchicalModel<T> {
 	@Override
 	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
-		animate(((ShadeEntity) entity).restState, ShadeAnimations.ShadeRest, ageInTicks);
-		animateWalk(ShadeAnimations.ShadeMove, limbSwing, limbSwingAmount, 1.0F, 1.0F);
+		animate(((ShadeEntity) entity).idleState, ShadeAnimations.SHADE_IDLE, ageInTicks);
+		animateWalk(ShadeAnimations.SHADE_MOVE, limbSwing, limbSwingAmount, 1.0F, 1.0F);
 	}
 
 	@Override

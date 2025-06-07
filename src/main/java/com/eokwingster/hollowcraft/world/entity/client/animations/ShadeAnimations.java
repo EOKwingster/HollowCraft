@@ -11,7 +11,7 @@ import net.minecraft.client.animation.KeyframeAnimations;
  * @author Author
  */
 public class ShadeAnimations {
-	public static final AnimationDefinition ShadeRest = AnimationDefinition.Builder.withLength(1.6667F).looping()
+	public static final AnimationDefinition SHADE_IDLE = AnimationDefinition.Builder.withLength(1.6667F).looping()
 		.addAnimation("north_tentacle", new AnimationChannel(AnimationChannel.Targets.ROTATION,
 			new Keyframe(0.0F, KeyframeAnimations.degreeVec(-10.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(0.4167F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
@@ -75,7 +75,7 @@ public class ShadeAnimations {
 		))
 		.build();
 
-	public static final AnimationDefinition ShadeMove = AnimationDefinition.Builder.withLength(0.25F)
+	public static final AnimationDefinition SHADE_MOVE = AnimationDefinition.Builder.withLength(0.25F)
 		.addAnimation("head", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
 			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 			new Keyframe(0.25F, KeyframeAnimations.degreeVec(-10.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM)

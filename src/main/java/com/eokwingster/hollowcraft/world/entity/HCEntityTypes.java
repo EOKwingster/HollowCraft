@@ -4,7 +4,6 @@ import com.eokwingster.hollowcraft.world.entity.custom.ShadeEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -22,8 +21,6 @@ public class HCEntityTypes {
             )
             .sized(0.44F, 1.57F)
             .eyeHeight(0.875F)
-            .fireImmune()
-            .immuneTo(Blocks.WITHER_ROSE, Blocks.POTTED_WITHER_ROSE)
             .clientTrackingRange(8)
             .build("shade")
     );

@@ -11,5 +11,18 @@
     "sounds": [
       "hollowcraft:focus_heal"
     ]
+  },
+  "hollow_shade_idle": {
+    "sounds": [
+      {
+        "name": "hollowcraft:hollow_shade_idle",
+        "stream": true
+      }
+    ]
+  },
+  "sword_hit_reject": {
+    "sounds": [
+      "hollowcraft:sword_hit_reject"
+    ]
   }
 }

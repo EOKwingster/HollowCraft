@@ -1,49 +1,49 @@
 package com.eokwingster.hollowcraft.client.sounds;
 
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 
 public class FadingSoundInstance extends AbstractTickableSoundInstance {
-    private final float fadingSpeed;
-    private boolean autoStop;
-    private boolean isFadingIn;
-    private boolean isFadingOut;
+    private float fadingVelocity;
+    private float minVolume;
+    private float maxVolume = 1.0F;
 
-    public FadingSoundInstance(SoundEvent soundEvent, SoundSource soundSource, RandomSource randomSource, float fadingSpeed, boolean autoStop) {
-        super(soundEvent, soundSource, randomSource);
-        this.fadingSpeed = fadingSpeed;
-        this.autoStop = autoStop;
+    public FadingSoundInstance(SoundEvent soundEvent, SoundSource source, float volume, float pitch, RandomSource random, BlockPos blockPos) {
+        super(soundEvent, source, random);
+        this.volume = volume;
+        this.pitch = pitch;
+        this.x = blockPos.getX();
+        this.y = blockPos.getY();
+        this.z = blockPos.getZ();
     }
 
     @Override
     public void tick() {
-        if (isFadingIn) {
-            volume = Math.clamp(volume + fadingSpeed, 0.0F, 2.0F);
-        } else if (isFadingOut) {
-            volume = Math.clamp(volume - fadingSpeed, 0.0F, 2.0F);
-            if (autoStop && isLooping() && volume == 0.0F) {
-                stop();
-            }
+        volume = Math.clamp(volume + fadingVelocity, minVolume, maxVolume);
+        if (volume == minVolume || volume == maxVolume) {
+            fadingVelocity = 0.0F;
+            minVolume = 0.0F;
+            maxVolume = 1.0F;
+        }
+        if (volume == 0.0F) {
+            stop();
         }
     }
 
-    public void fadeIn() {
-        stopFadeOut();
-        isFadingIn = true;
-    }
-
-    public void stopFadeIn() {
-        isFadingIn = false;
-    }
-
     public void fadeOut() {
-        stopFadeIn();
-        isFadingOut = true;
+        fadeOutTo(0.0F, 0.05F);
     }
 
-    public void stopFadeOut() {
-        isFadingOut = false;
+    public void fadeOutTo(float minVolume, float fadingSpeed) {
+        this.minVolume = Math.clamp(minVolume, 0.0F, volume);
+        fadingVelocity = -fadingSpeed;
+    }
+
+    public void fadeInTo(float maxVolume, float fadingSpeed) {
+        this.maxVolume = Math.clamp(maxVolume, volume, 1.0F);
+        this.fadingVelocity = fadingSpeed;
     }
 }

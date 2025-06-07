@@ -1,5 +1,6 @@
 package com.eokwingster.hollowcraft.skills.spells;
 
+import com.google.common.collect.HashBiMap;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
@@ -12,11 +13,11 @@ import java.util.stream.Collectors;
 
 public class PlayerSpells implements INBTSerializable<CompoundTag> {
     public List<Integer> playerSpells = new ArrayList<>();
-    public static final Map<Integer, ISpell> spellMap = Map.of(0, Focus.INSTANCE);
+    private static final HashBiMap<Integer, ISpell> ID_SPELL_BI_MAP = HashBiMap.create(Map.of(0, Focus.INSTANCE));
 
     public static void addSpell(List<Integer> playerSpells, ISpell spell) {
-        int key = getKey(spell);
-        if (!playerSpells.contains(key) && key != -1) {
+        Integer key = getKey(spell);
+        if (key != null && !playerSpells.contains(key)) {
             playerSpells.add(key);
         }
     }
@@ -25,13 +26,8 @@ public class PlayerSpells implements INBTSerializable<CompoundTag> {
         return playerSpells.contains(getKey(spell));
     }
 
-    public static int getKey(ISpell spell) {
-        for (Map.Entry<Integer, ISpell> entry : spellMap.entrySet()) {
-            if (entry.getValue().equals(spell)) {
-                return entry.getKey();
-            }
-        }
-        return -1;
+    public static Integer getKey(ISpell spell) {
+        return ID_SPELL_BI_MAP.inverse().get(spell);
     }
 
     @Override
