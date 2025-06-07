@@ -19,8 +19,8 @@ public class HCEntityTypes {
                     ShadeEntity::new,
                     MobCategory.MONSTER
             )
-            .sized(0.44F, 1.57F)
-            .eyeHeight(0.875F)
+            .sized(0.5F, 1.4F)
+            .eyeHeight(0.94F)
             .clientTrackingRange(8)
             .build("shade")
     );

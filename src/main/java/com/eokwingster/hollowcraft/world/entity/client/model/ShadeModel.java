@@ -62,7 +62,7 @@ public class ShadeModel<T extends Entity> extends HierarchicalModel<T> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(-0.5F, 1.0F, 0.0F));
+		PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.5F, 12.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
 		PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 1.0F, 0.0F));
 
@@ -122,8 +122,8 @@ public class ShadeModel<T extends Entity> extends HierarchicalModel<T> {
 	@Override
 	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
-		animate(((ShadeEntity) entity).idleState, ShadeAnimations.SHADE_IDLE, ageInTicks);
-		animateWalk(ShadeAnimations.SHADE_MOVE, limbSwing, limbSwingAmount, 1.0F, 1.0F);
+		animate(((ShadeEntity) entity).idleAnimationState, ShadeAnimations.SHADE_IDLE, ageInTicks);
+		animate(((ShadeEntity) entity).moveAnimationState, ShadeAnimations.SHADE_MOVE, ageInTicks);
 	}
 
 	@Override
