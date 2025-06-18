@@ -124,6 +124,7 @@ public class ShadeModel<T extends Entity> extends HierarchicalModel<T> {
 		root().getAllParts().forEach(ModelPart::resetPose);
 		animate(((ShadeEntity) entity).idleAnimationState, ShadeAnimations.SHADE_IDLE, ageInTicks);
 		animate(((ShadeEntity) entity).moveAnimationState, ShadeAnimations.SHADE_MOVE, ageInTicks);
+		animate(((ShadeEntity) entity).dieAnimationState, ShadeAnimations.SHADE_DIE, ageInTicks);
 	}
 
 	@Override

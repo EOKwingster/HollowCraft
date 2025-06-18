@@ -2,6 +2,7 @@ package com.eokwingster.hollowcraft.data;
 
 import com.eokwingster.hollowcraft.data.lang.HCLanguageProvider;
 import com.eokwingster.hollowcraft.data.model.item.HCItemModelProvider;
+import com.eokwingster.hollowcraft.data.particle.HCParticleDescriptionProvider;
 import com.eokwingster.hollowcraft.data.registries.HCRegistryProvider;
 import com.eokwingster.hollowcraft.data.sounds.HCSoundDefinitionProvider;
 import com.eokwingster.hollowcraft.data.tags.HCBlockTagsProvider;
@@ -36,6 +37,7 @@ public class HCDataGenerator {
         generator.addProvider(client, new HCLanguageProvider(output, MODID, "en_us"));
         generator.addProvider(client, new HCItemModelProvider(output, MODID, exFileHelper));
         generator.addProvider(client, new HCSoundDefinitionProvider(output, MODID, exFileHelper));
+        generator.addProvider(client, new HCParticleDescriptionProvider(output, exFileHelper));
 
         //server
         HCBlockTagsProvider blockTagsProvider = generator.addProvider(server, new HCBlockTagsProvider(output, lookupProvider, MODID, exFileHelper));

@@ -18,7 +18,8 @@ public class HCDamageTypeTagsProvider extends DamageTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(HCDamageTypeTags.HC_DAMAGE).add(
-                HCDamageTypes.NAIL_DAMAGE_TYPE
+                HCDamageTypes.NAIL_DAMAGE_TYPE,
+                HCDamageTypes.HOLLOW_FIRE
         );
     }
 }

@@ -10,6 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import static com.eokwingster.hollowcraft.HollowCraft.MODID;
 
 public class ShadeRenderer extends MobRenderer<ShadeEntity, ShadeModel<ShadeEntity>> {
+    private static final int DYING_TRANSPARENT_LENGTH = 20;
+
     public ShadeRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new ShadeModel<>(pContext.bakeLayer(HCModelLayers.SHADE_LAYER)), 0F);
     }

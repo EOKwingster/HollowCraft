@@ -1,5 +1,6 @@
 package com.eokwingster.hollowcraft;
 
+import com.eokwingster.hollowcraft.client.particle.HCParticleTypes;
 import com.eokwingster.hollowcraft.client.sounds.HCSoundEvents;
 import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
 import com.eokwingster.hollowcraft.world.entity.HCEntityTypes;
@@ -21,6 +22,7 @@ public class HollowCraft
         HCAttachmentTypes.ATTACHMENT_TYPES.register(bus);
         HCSoundEvents.SOUND_EVENTS.register(bus);
         HCEntityTypes.ENTITY_TYPES.register(bus);
+        HCParticleTypes.PARTICLE_TYPES.register(bus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, HCConfig.CONFIG);
     }

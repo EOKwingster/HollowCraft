@@ -26,5 +26,11 @@ public class HCSoundDefinitionProvider extends SoundDefinitionsProvider {
         add(HCSoundEvents.SHADE_IDLE, SoundDefinition.definition()
                 .with(sound(HCSoundEvents.SHADE_IDLE.get().getLocation()).stream())
         );
+        add(HCSoundEvents.ENEMY_DAMAGE, SoundDefinition.definition()
+                .with(sound(HCSoundEvents.ENEMY_DAMAGE.get().getLocation()))
+        );
+        add(HCSoundEvents.BOSS_EXPLODE_CLEAN, SoundDefinition.definition()
+                .with(sound(HCSoundEvents.BOSS_EXPLODE_CLEAN.get().getLocation()))
+        );
     }
 }

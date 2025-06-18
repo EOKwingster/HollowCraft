@@ -16,6 +16,8 @@ public class HCSoundEvents {
     public static final Supplier<SoundEvent> FOCUS_HEAL = registerSound("focus_heal");
     public static final Supplier<SoundEvent> SWORD_HIT_REJECT = registerSound("sword_hit_reject");
     public static final Supplier<SoundEvent> SHADE_IDLE = registerSound("hollow_shade_idle");
+    public static final Supplier<SoundEvent> ENEMY_DAMAGE = registerSound("enemy_damage");
+    public static final Supplier<SoundEvent> BOSS_EXPLODE_CLEAN = registerSound("boss_explode_clean");
 
     private static Supplier<SoundEvent> registerSound(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(MODID, name)));

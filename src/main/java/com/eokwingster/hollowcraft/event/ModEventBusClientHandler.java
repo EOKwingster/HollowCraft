@@ -4,6 +4,9 @@ import com.eokwingster.hollowcraft.client.gui.HCGuiLayers;
 import com.eokwingster.hollowcraft.client.gui.hud.LookingDirectionIndicator;
 import com.eokwingster.hollowcraft.client.gui.hud.SoulMeterAndVessels;
 import com.eokwingster.hollowcraft.client.keymapping.HCKeyMappings;
+import com.eokwingster.hollowcraft.client.particle.HCParticleTypes;
+import com.eokwingster.hollowcraft.client.particle.ShadeDeadParticle;
+import com.eokwingster.hollowcraft.client.particle.ShadeDyingParticle;
 import com.eokwingster.hollowcraft.world.entity.HCEntityTypes;
 import com.eokwingster.hollowcraft.world.entity.client.HCModelLayers;
 import com.eokwingster.hollowcraft.world.entity.client.model.ShadeModel;
@@ -15,6 +18,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 import static com.eokwingster.hollowcraft.HollowCraft.MODID;
@@ -41,5 +45,11 @@ public class ModEventBusClientHandler {
     @SubscribeEvent
     private static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(HCModelLayers.SHADE_LAYER, ShadeModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    private static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(HCParticleTypes.SHADE_DYING_PARTICLE.get(), ShadeDyingParticle.Provider::new);
+        event.registerSpriteSet(HCParticleTypes.SHADE_DEAD_PARTICLE.get(), ShadeDeadParticle.Provider::new);
     }
 }

@@ -1,4 +1,14 @@
 {
+  "boss_explode_clean": {
+    "sounds": [
+      "hollowcraft:boss_explode_clean"
+    ]
+  },
+  "enemy_damage": {
+    "sounds": [
+      "hollowcraft:enemy_damage"
+    ]
+  },
   "focus_charging": {
     "sounds": [
       {

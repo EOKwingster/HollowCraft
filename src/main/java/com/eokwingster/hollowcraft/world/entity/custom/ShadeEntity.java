@@ -1,34 +1,59 @@
 package com.eokwingster.hollowcraft.world.entity.custom;
 
+import com.eokwingster.hollowcraft.client.particle.HCParticleTypes;
+import com.eokwingster.hollowcraft.client.sounds.HCSoundEvents;
+import com.eokwingster.hollowcraft.world.damagetype.HCDamageTypes;
+import com.eokwingster.hollowcraft.world.entity.client.animations.ShadeAnimations;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidType;
 
-public class ShadeEntity extends Monster {
-    private boolean from_player = false;
-    private int soul = 0;
+import java.util.EnumSet;
+import java.util.function.Supplier;
 
+public class ShadeEntity extends Monster implements IHCMob {
+    // animations states
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState moveAnimationState = new AnimationState();
+    public final AnimationState dieAnimationState = new AnimationState();
+    // for die animation
+    public static final int DIE_ANIMATION_LENGTH = (int) (ShadeAnimations.SHADE_DIE.lengthInSeconds() * 20);
+    private final Supplier<Double> dyingShakeOffsetSupplier = () -> this.random.nextInt(-1, 2) / 100.0D;
+    private int dyingTimer = 0;
+    private Vec3 dyingLastPosition;
+    // for light long time exposure damage
+    private static final int LIGHT_EXPOSURE_THRESHOLD = 7;
+    private static final int LIGHT_EXPOSURE_TIME_THRESHOLD = 200;
+    private int lightExposureTimer = 0;
 
     public ShadeEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -39,24 +64,45 @@ public class ShadeEntity extends Monster {
         return Monster.createMonsterAttributes()
                 .add(Attributes.FOLLOW_RANGE, 12.0)
                 .add(Attributes.ATTACK_DAMAGE, 5.0)
-                .add(Attributes.FLYING_SPEED, 0.23);
+                .add(Attributes.FLYING_SPEED, 0.4);
     }
 
     @Override
     protected void registerGoals() {
-        this.targetSelector.addGoal(0, new MeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(1, new ShadeAvoidLightGoal(this, LIGHT_EXPOSURE_THRESHOLD, 16));
+        this.goalSelector.addGoal(2, new ShadeMeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
     }
 
     @Override
     public void tick() {
         super.tick();
         idleAnimationState.startIfStopped(tickCount);
+        this.moveAnimationTick();
+        this.lightExposureTick();
+        this.dieAnimationTick();
+    }
 
+    private void lightExposureTick() {
+        if (level().getBrightness(LightLayer.BLOCK, this.blockPosition()) > LIGHT_EXPOSURE_THRESHOLD) {
+            lightExposureTimer++;
+            if (level() instanceof ServerLevel serverLevel && !dieAnimationState.isStarted()) {
+                serverLevel.sendParticles(HCParticleTypes.SHADE_DYING_PARTICLE.get(), this.position().x, this.position().y + this.getBbHeight() / 2, this.position().z, 1, 0.0, 0.0, 0.0, 1.0);
+            }
+            if (lightExposureTimer > LIGHT_EXPOSURE_TIME_THRESHOLD) {
+                Holder<DamageType> hollowFireDamageType = this.level().registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(HCDamageTypes.HOLLOW_FIRE);
+                this.hurt(new DamageSource(hollowFireDamageType), 5.0F);
+            }
+        } else {
+            lightExposureTimer = 0;
+        }
+    }
+
+    private void moveAnimationTick() {
         double delX = this.getDeltaMovement().x;
-        double delZ = this.getDeltaMovement().z;
+        double delZ =  this.getDeltaMovement().z;
         if ((delX * delX + delZ * delZ) != 0) {
             moveAnimationState.startIfStopped(tickCount);
         } else {
@@ -64,22 +110,48 @@ public class ShadeEntity extends Monster {
         }
     }
 
-    @Override
-    public void addAdditionalSaveData(CompoundTag pCompound) {
-        super.addAdditionalSaveData(pCompound);
-        pCompound.putBoolean("from_player", from_player);
-        pCompound.putInt("soul", soul);
+    private void dieAnimationTick() {
+        if (!dieAnimationState.isStarted() && super.isDeadOrDying()) {
+            this.startToDie();
+        }
+        if (dieAnimationState.isStarted()) {
+            dyingTimer++;
+            this.setDeltaMovement(0.0, 0.0, 0.0);
+            this.dyingLastPosition = this.position();
+            double posX = this.position().x;
+            double posY = this.position().y;
+            double posZ = this.position().z;
+            this.moveTo(dyingLastPosition);
+            this.move(MoverType.SELF, new Vec3(dyingShakeOffsetSupplier.get(), dyingShakeOffsetSupplier.get(), dyingShakeOffsetSupplier.get()));
+            float halfHeight = this.getBbHeight() / 2;
+            if (this.dyingTimer > 1 && this.dyingTimer < DIE_ANIMATION_LENGTH - 2) {
+                if (level() instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(HCParticleTypes.SHADE_DYING_PARTICLE.get(), posX, posY + halfHeight, posZ, 10, 0.0, 0.0, 0.0, 1.0);
+                }
+            } else if (this.dyingTimer == 1) {
+                if (level() instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(HCParticleTypes.SHADE_DEAD_PARTICLE.get(), posX, posY + halfHeight, posZ, 300, 0.0, 0.0, 0.0, 1.0);
+                } else {
+                    LocalPlayer localPlayer = Minecraft.getInstance().player;
+                    level().playSound(localPlayer, this, HCSoundEvents.BOSS_EXPLODE_CLEAN.get(), SoundSource.HOSTILE, 1.0F, 1.0F);
+                }
+            }
+            if (dyingTimer == DIE_ANIMATION_LENGTH + 1) {
+                this.setInvisible(true);
+            }
+        }
+    }
+
+    public void startToDie() {
+        this.dieAnimationState.start(this.tickCount);
+        this.dyingLastPosition = this.position();
+        this.setInvulnerable(true);
+        this.setNoAi(true);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag pCompound) {
-        super.readAdditionalSaveData(pCompound);
-        if (pCompound.contains("from_player")) {
-            this.from_player = pCompound.getBoolean("from_player");
-        }
-        if (pCompound.contains("soul")) {
-            this.soul = pCompound.getInt("soul");
-        }
+    public boolean isDeadOrDying() {
+        return dyingTimer > DIE_ANIMATION_LENGTH && super.isDeadOrDying();
     }
 
     @Override
@@ -106,11 +178,6 @@ public class ShadeEntity extends Monster {
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return super.getHurtSound(pDamageSource);
-    }
-
-    @Override
     protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
     }
 
@@ -122,6 +189,16 @@ public class ShadeEntity extends Monster {
     @Override
     public boolean onGround() {
         return false;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return this.getHollowHurtSound(pDamageSource);
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.EMPTY;
     }
 
     static class ShadeMoveControl extends FlyingMoveControl {
@@ -138,4 +215,102 @@ public class ShadeEntity extends Monster {
             super.tick();
         }
     }
+
+    static class ShadeAvoidLightGoal extends Goal {
+        private final PathfinderMob mob;
+        private final int avoidLightLevel;
+        private final int avoidRange;
+        private Path path;
+        private final PathNavigation pathNav;
+
+        public ShadeAvoidLightGoal(PathfinderMob mob, int avoidLightLevel, int avoidRange) {
+            this.mob = mob;
+            this.pathNav = mob.getNavigation();
+            this.avoidLightLevel = avoidLightLevel;
+            this.avoidRange = avoidRange;
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (this.mob.level().getBrightness(LightLayer.BLOCK, this.mob.blockPosition()) > this.avoidLightLevel) {
+                Vec3 vec3 = findLowLightPos();
+                if (vec3 != null) {
+                    this.path = this.pathNav.createPath(vec3.x, vec3.y, vec3.z, 0);
+                    return this.path != null;
+                } else {
+                    this.pathNav.stop();
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        private Vec3 findLowLightPos() {
+            Vec3 vec3 = null;
+            for (int i = 0; i < 20; i++) {
+                Vec3 randomPos = DefaultRandomPos.getPosAway(this.mob, avoidRange, avoidRange, this.mob.position());
+                if (randomPos != null) {
+                    BlockPos pos = BlockPos.containing(randomPos);
+                    if (this.mob.level().getBrightness(LightLayer.BLOCK, pos) <= this.avoidLightLevel) {
+                        if (vec3 == null || this.mob.distanceToSqr(randomPos) < this.mob.distanceToSqr(vec3)) {
+                            vec3 =  randomPos;
+                        }
+                    }
+                }
+            }
+            return vec3;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            if (mob.level().getBrightness(LightLayer.BLOCK, this.mob.blockPosition()) > this.avoidLightLevel) {
+                return !this.pathNav.isDone();
+            }
+            return false;
+        }
+
+        @Override
+        public void start() {
+            this.pathNav.moveTo(this.path, 1.5D);
+        }
+
+        @Override
+        public void stop() {
+            this.pathNav.stop();
+        }
+    }
+
+    static class ShadeMeleeAttackGoal extends MeleeAttackGoal {
+        public ShadeMeleeAttackGoal(PathfinderMob mob, double speedModifier, boolean useLongMemory) {
+            super(mob, speedModifier, useLongMemory);
+        }
+
+        @Override
+        public boolean canUse() {
+            LivingEntity target = this.mob.getTarget();
+            if (target != null) {
+                BlockPos targetPos = target.blockPosition();
+                if (this.mob.level().getBrightness(LightLayer.BLOCK, targetPos) > LIGHT_EXPOSURE_THRESHOLD) {
+                    this.mob.getNavigation().stop();
+                }
+            }
+            return super.canUse();
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            LivingEntity target = this.mob.getTarget();
+            if (target != null) {
+                BlockPos targetPos = target.blockPosition();
+                if (this.mob.level().getBrightness(LightLayer.BLOCK, targetPos) > LIGHT_EXPOSURE_THRESHOLD) {
+                    this.mob.getNavigation().stop();
+                }
+            }
+            return super.canContinueToUse();
+        }
+    }
 }
+
+
+
