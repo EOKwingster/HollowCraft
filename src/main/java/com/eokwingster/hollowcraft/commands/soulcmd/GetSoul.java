@@ -1,6 +1,6 @@
 package com.eokwingster.hollowcraft.commands.soulcmd;
 
-import com.eokwingster.hollowcraft.skills.soul.Soul;
+import com.eokwingster.hollowcraft.world.attachmentdata.data.Soul;
 import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
@@ -9,7 +9,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
-public class getSoul implements Command<CommandSourceStack> {
+public class GetSoul implements Command<CommandSourceStack> {
     @Override
     public int run(CommandContext<CommandSourceStack> commandContext) throws CommandSyntaxException {
         CommandSourceStack source = commandContext.getSource();

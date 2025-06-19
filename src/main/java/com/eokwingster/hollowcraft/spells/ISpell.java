@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.skills.spells;
+package com.eokwingster.hollowcraft.spells;
 
 import net.minecraft.server.level.ServerPlayer;
 

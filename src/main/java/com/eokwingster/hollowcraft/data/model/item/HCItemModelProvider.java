@@ -19,14 +19,13 @@ public class HCItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        basicItem(HCItems.OLD_NAIL.get());
+        basicItem(HCItems.NAIL.get());
         basicItem(HCItems.KNIGHT_SKULL.get());
         basicSpawnEgg(HCItems.SHADE_SPAWN_EGG.get());
     }
 
     public ItemModelBuilder basicSpawnEgg(Item item) {
         ResourceLocation rl = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
-        return getBuilder(rl.toString())
-                .parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"));
+        return getBuilder(rl.toString()).parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"));
     }
 }

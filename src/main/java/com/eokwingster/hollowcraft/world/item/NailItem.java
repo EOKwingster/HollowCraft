@@ -25,8 +25,8 @@ public class NailItem extends SwordItem {
         bounce = LookingDirectionIndicator.lookingDirection == LookingDirectionIndicator.LookingDirection.DOWNWARD;
     }
 
-    public static ItemAttributeModifiers createAttributes(float damage) {
-        return SwordItem.createAttributes(HCTiers.NAIL, damage, HCConfig.nailAttackSpeed);
+    public static ItemAttributeModifiers createAttributes() {
+        return SwordItem.createAttributes(HCTiers.NAIL, 0, HCConfig.nailAttackSpeed);
     }
 
     public static void tickNailBounce(LocalPlayer localPlayer) {

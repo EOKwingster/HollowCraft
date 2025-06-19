@@ -25,7 +25,7 @@ public class HCLanguageProvider extends LanguageProvider {
         add(HCCreativeModeTabs.TAB_HOLLOW_CRAFT.get().getDisplayName().getString(), "Hollow Craft");
 
         //items
-        add(HCItems.OLD_NAIL.get(), "Old Nail");
+        add(HCItems.NAIL.get(), "Nail");
         add(HCItems.KNIGHT_SKULL.get(), "Knight Skull");
         add(HCItems.SHADE_SPAWN_EGG.get(), "Shade");
 
@@ -34,6 +34,8 @@ public class HCLanguageProvider extends LanguageProvider {
         add("commands.hollowCraft.setSoul", "Soul set to: ");
         add("commands.hollowCraft.setSoulVessel", "Soul Vessel set to: ");
         add("commands.hollowCraft.getSoul", "Soul: ");
+        add("commands.hollowCraft.setNailLevel", "Nail Level set to: ");
+        add("commands.hollowCraft.getNailDamage", "Nail Damage: ");
     }
 
     private void addKey(KeyMapping key, String name) {

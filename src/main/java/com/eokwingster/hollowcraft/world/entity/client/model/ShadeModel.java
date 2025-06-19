@@ -4,7 +4,7 @@ package com.eokwingster.hollowcraft.world.entity.client.model;// Made with Block
 
 
 import com.eokwingster.hollowcraft.world.entity.client.animations.ShadeAnimations;
-import com.eokwingster.hollowcraft.world.entity.custom.ShadeEntity;
+import com.eokwingster.hollowcraft.world.entity.entities.ShadeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HierarchicalModel;

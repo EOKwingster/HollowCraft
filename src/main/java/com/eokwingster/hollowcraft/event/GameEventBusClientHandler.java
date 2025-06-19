@@ -4,9 +4,9 @@ import com.eokwingster.hollowcraft.client.gui.hud.LookingDirectionIndicator;
 import com.eokwingster.hollowcraft.client.keymapping.HCKeyMappings;
 import com.eokwingster.hollowcraft.client.sounds.FadingSoundInstance;
 import com.eokwingster.hollowcraft.client.sounds.HCSoundEvents;
-import com.eokwingster.hollowcraft.network.SpellData;
-import com.eokwingster.hollowcraft.skills.soul.Soul;
-import com.eokwingster.hollowcraft.skills.spells.Focus;
+import com.eokwingster.hollowcraft.network.SpellReleaseData;
+import com.eokwingster.hollowcraft.world.attachmentdata.data.Soul;
+import com.eokwingster.hollowcraft.spells.Focus;
 import com.eokwingster.hollowcraft.tags.HCItemTags;
 import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
 import com.eokwingster.hollowcraft.world.item.NailItem;
@@ -55,7 +55,7 @@ public class GameEventBusClientHandler {
         if (HCKeyMappings.KEY_SPELL.isDown()) {
             if (spellKeyDownTime > 5) {
                 //trigger focus effect
-                PacketDistributor.sendToServer(SpellData.make(LookingDirectionIndicator.lookingDirection, spellKeyDownTime));
+                PacketDistributor.sendToServer(SpellReleaseData.make(LookingDirectionIndicator.lookingDirection, spellKeyDownTime));
 
                 // handle focus charging sound
                 Soul soulAttach = player.getData(HCAttachmentTypes.SOUL);
@@ -78,7 +78,7 @@ public class GameEventBusClientHandler {
         } else {
             // trigger instant spells' effect
             if (spellKeyDownTime > 0 && spellKeyDownTime <= 5) {
-                PacketDistributor.sendToServer(SpellData.make(LookingDirectionIndicator.lookingDirection, spellKeyDownTime));
+                PacketDistributor.sendToServer(SpellReleaseData.make(LookingDirectionIndicator.lookingDirection, spellKeyDownTime));
 
             // focus stop sound fade out
             } else if (focusChargingSound != null) {

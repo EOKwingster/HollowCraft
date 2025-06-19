@@ -20,7 +20,7 @@ public class HCItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(HCItemTags.NAIL).add(
-                HCItems.OLD_NAIL.get()
+                HCItems.NAIL.get()
         );
     }
 }

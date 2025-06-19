@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.world.entity.custom;
+package com.eokwingster.hollowcraft.world.entity.entities;
 
 import com.eokwingster.hollowcraft.client.sounds.HCSoundEvents;
 import net.minecraft.sounds.SoundEvent;

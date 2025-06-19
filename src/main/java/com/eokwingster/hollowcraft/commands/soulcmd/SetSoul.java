@@ -1,6 +1,6 @@
 package com.eokwingster.hollowcraft.commands.soulcmd;
 
-import com.eokwingster.hollowcraft.skills.soul.Soul;
+import com.eokwingster.hollowcraft.world.attachmentdata.data.Soul;
 import com.eokwingster.hollowcraft.network.SoulData;
 import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
 import com.mojang.brigadier.Command;
@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class SetSoul implements Command<CommandSourceStack> {
+    public static final String ARGUMENT_NAME = "soul";
 
     @Override
     public int run(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
@@ -19,7 +20,7 @@ public class SetSoul implements Command<CommandSourceStack> {
         ServerPlayer player = source.getPlayer();
         Soul soulAttach = player.getData(HCAttachmentTypes.SOUL);
 
-        int value = context.getArgument("value", Integer.class);
+        int value = context.getArgument(ARGUMENT_NAME, Integer.class);
         soulAttach.setSoul(value);
         PacketDistributor.sendToPlayer(player, new SoulData(soulAttach.writeNBT()));
 

@@ -1,12 +1,9 @@
-package com.eokwingster.hollowcraft.skills.spells;
+package com.eokwingster.hollowcraft.spells;
 
-import com.eokwingster.hollowcraft.client.sounds.HCSoundEvents;
 import com.eokwingster.hollowcraft.network.SoulData;
-import com.eokwingster.hollowcraft.skills.soul.Soul;
 import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
+import com.eokwingster.hollowcraft.world.attachmentdata.data.Soul;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class Focus implements ISpell {

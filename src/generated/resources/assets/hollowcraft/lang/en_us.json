@@ -1,9 +1,11 @@
 {
+  "commands.hollowCraft.getNailDamage": "Nail Damage: ",
   "commands.hollowCraft.getSoul": "Soul: ",
+  "commands.hollowCraft.setNailLevel": "Nail Level set to: ",
   "commands.hollowCraft.setSoul": "Soul set to: ",
   "commands.hollowCraft.setSoulVessel": "Soul Vessel set to: ",
   "item.hollowcraft.knight_skull": "Knight Skull",
-  "item.hollowcraft.old_nail": "Old Nail",
+  "item.hollowcraft.nail": "Nail",
   "item.hollowcraft.shade_spawn_egg": "Shade",
   "itemGroup.hollowcraft.title": "Hollow Craft",
   "key.categories.hollowcraft.hollowskills": "Hollow Skills",

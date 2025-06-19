@@ -12,18 +12,19 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import static com.eokwingster.hollowcraft.HollowCraft.MODID;
 
-public record SpellData(CompoundTag spellNbt) implements CustomPacketPayload {
-    public static final Type<SpellData> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "spell_data"));
+public record NailLevelData(CompoundTag nailLevelNbt) implements CustomPacketPayload {
 
-    public static final StreamCodec<ByteBuf, SpellData> STREAM_CODEC = StreamCodec.composite(
+    public static final Type<NailLevelData> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "nail_damage_data"));
+
+    public static final StreamCodec<ByteBuf, NailLevelData> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.COMPOUND_TAG,
-            SpellData::spellNbt,
-            SpellData::new
+            NailLevelData::nailLevelNbt,
+            NailLevelData::new
     );
 
-    public static void clientHandler(final SpellData spellData, final IPayloadContext context) {
+    public static void clientHandler(final NailLevelData nailLevelData, final IPayloadContext context) {
         context.enqueueWork(() -> {
-            context.player().getData(HCAttachmentTypes.SPELLS).readNBT(spellData.spellNbt());
+            context.player().getData(HCAttachmentTypes.NAIL_LEVEL).readNBT(nailLevelData.nailLevelNbt());
         }).exceptionally(e -> {
             context.disconnect(Component.translatable("network.hollowCraft.exception", e.getMessage()));
             return null;

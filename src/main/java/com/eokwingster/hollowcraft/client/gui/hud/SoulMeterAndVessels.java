@@ -1,7 +1,7 @@
 package com.eokwingster.hollowcraft.client.gui.hud;
 
 import com.eokwingster.hollowcraft.HCConfig;
-import com.eokwingster.hollowcraft.skills.soul.Soul;
+import com.eokwingster.hollowcraft.world.attachmentdata.data.Soul;
 import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.DeltaTracker;

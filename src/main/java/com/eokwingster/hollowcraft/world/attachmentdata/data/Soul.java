@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.skills.soul;
+package com.eokwingster.hollowcraft.world.attachmentdata.data;
 
 import com.eokwingster.hollowcraft.HCConfig;
 import net.minecraft.core.HolderLookup;
@@ -39,7 +39,10 @@ public class Soul implements INBTSerializable<CompoundTag> {
     }
 
     public void setSoul(int value) {
-        soul = Math.clamp(value, 0, getMaxSoul());
+        if (value < 0 || value > getMaxSoul()) {
+            throw new IllegalArgumentException("Invalid soul: " + value + ". Soul must be between 0 and " + getMaxSoul() + " for you.");
+        }
+        soul = value;
     }
 
     public int getVessel() {
@@ -55,12 +58,11 @@ public class Soul implements INBTSerializable<CompoundTag> {
     }
 
     public void setVessel(int num) {
-        int oldVessel = getVessel();
-        vessel = Math.clamp(num, 0, 3);
-        correctValues();
-        if (vessel > oldVessel) {
-            addSoul((vessel - oldVessel) * getSoulVesselCapacity());
+        if (num < 0 || num > 3) {
+            throw new IllegalArgumentException("Invalid vessel number: " + num + ". Vessel number must be between 0 and 3.");
         }
+        vessel = num;
+        correctValues();
     }
 
     public int getMaxSoul() {
@@ -78,12 +80,19 @@ public class Soul implements INBTSerializable<CompoundTag> {
 
     private void correctValues() {
         this.maxSoul =  getSoulMeterCapacity() + getVessel() * getSoulVesselCapacity();
-        setSoul(getSoul());
+        if (getSoul() > getMaxSoul()) {
+            setSoul(getMaxSoul());
+        }
     }
 
     @Override
     public @UnknownNullability CompoundTag serializeNBT(HolderLookup.Provider provider) {
         return writeNBT();
+    }
+
+    @Override
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+        this.readNBT(nbt);
     }
 
     public CompoundTag writeNBT() {
@@ -94,15 +103,25 @@ public class Soul implements INBTSerializable<CompoundTag> {
         return tag;
     }
 
-    @Override
-    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        this.readNBT(nbt);
-    }
-
     public void readNBT(CompoundTag nbt) {
         soul = nbt.getInt("soul");
         vessel = nbt.getInt("vessel");
         broken = nbt.getBoolean("broken");
         correctValues();
+    }
+
+    private Soul copy() {
+        Soul soulCopy = new Soul();
+        soulCopy.soul = this.soul;
+        soulCopy.vessel = this.vessel;
+        soulCopy.broken = this.broken;
+        soulCopy.maxSoul = this.maxSoul;
+        return soulCopy;
+    }
+
+    public Soul getPlayerCloneSoul() {
+        Soul cloneSoul = this.copy();
+        cloneSoul.setSoul(0);
+        return cloneSoul;
     }
 }
