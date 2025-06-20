@@ -1,6 +1,32 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:item/handheld",
+  "overrides": [
+    {
+      "model": "hollowcraft:item/sharpened_nail",
+      "predicate": {
+        "hollowcraft:nail_state": 0.1
+      }
+    },
+    {
+      "model": "hollowcraft:item/channelled_nail",
+      "predicate": {
+        "hollowcraft:nail_state": 0.2
+      }
+    },
+    {
+      "model": "hollowcraft:item/coiled_nail",
+      "predicate": {
+        "hollowcraft:nail_state": 0.3
+      }
+    },
+    {
+      "model": "hollowcraft:item/pure_nail",
+      "predicate": {
+        "hollowcraft:nail_state": 0.4
+      }
+    }
+  ],
   "textures": {
-    "layer0": "hollowcraft:item/nail"
+    "layer0": "hollowcraft:item/old_nail"
   }
 }

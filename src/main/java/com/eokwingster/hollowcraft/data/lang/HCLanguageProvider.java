@@ -3,6 +3,7 @@ package com.eokwingster.hollowcraft.data.lang;
 import com.eokwingster.hollowcraft.client.keymapping.HCKeyMappings;
 import com.eokwingster.hollowcraft.world.item.HCCreativeModeTabs;
 import com.eokwingster.hollowcraft.world.item.HCItems;
+import com.eokwingster.hollowcraft.world.item.NailItem;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -25,9 +26,14 @@ public class HCLanguageProvider extends LanguageProvider {
         add(HCCreativeModeTabs.TAB_HOLLOW_CRAFT.get().getDisplayName().getString(), "Hollow Craft");
 
         //items
-        add(HCItems.NAIL.get(), "Nail");
         add(HCItems.KNIGHT_SKULL.get(), "Knight Skull");
         add(HCItems.SHADE_SPAWN_EGG.get(), "Shade");
+        add(HCItems.NAIL.get(), "Nail");
+        add(NailItem.TRANSLATABLE_ID_OLD_NAIL, "Old Nail");
+        add(NailItem.TRANSLATABLE_ID_SHARPENED_NAIL, "Sharpened Nail");
+        add(NailItem.TRANSLATABLE_ID_CHANNELLED_NAIL, "Channelled Nail");
+        add(NailItem.TRANSLATABLE_ID_COILED_NAIL, "Coiled Nail");
+        add(NailItem.TRANSLATABLE_ID_PURE_NAIL, "Pure Nail");
 
         //messages
         add("network.hollowCraft.exception", "Network Exception!");

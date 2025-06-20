@@ -39,10 +39,7 @@ public class Soul implements INBTSerializable<CompoundTag> {
     }
 
     public void setSoul(int value) {
-        if (value < 0 || value > getMaxSoul()) {
-            throw new IllegalArgumentException("Invalid soul: " + value + ". Soul must be between 0 and " + getMaxSoul() + " for you.");
-        }
-        soul = value;
+        soul = Math.clamp(value, 0, getMaxSoul());
     }
 
     public int getVessel() {
@@ -58,10 +55,7 @@ public class Soul implements INBTSerializable<CompoundTag> {
     }
 
     public void setVessel(int num) {
-        if (num < 0 || num > 3) {
-            throw new IllegalArgumentException("Invalid vessel number: " + num + ". Vessel number must be between 0 and 3.");
-        }
-        vessel = num;
+        vessel = Math.clamp(num, 0, 3);
         correctValues();
     }
 

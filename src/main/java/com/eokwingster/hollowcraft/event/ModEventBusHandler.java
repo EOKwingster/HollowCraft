@@ -6,12 +6,13 @@ import com.eokwingster.hollowcraft.network.SoulData;
 import com.eokwingster.hollowcraft.network.SpellData;
 import com.eokwingster.hollowcraft.network.SpellReleaseData;
 import com.eokwingster.hollowcraft.world.entity.HCEntityTypes;
-import com.eokwingster.hollowcraft.world.entity.entities.ShadeEntity;
+import com.eokwingster.hollowcraft.world.entity.ShadeEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 import static com.eokwingster.hollowcraft.HollowCraft.MODID;
@@ -41,10 +42,13 @@ public class ModEventBusHandler {
                 SoulData.STREAM_CODEC,
                 SoulData::clientHandler
         );
-        registrar.playToServer(
+        registrar.playBidirectional(
                 SpellReleaseData.TYPE,
                 SpellReleaseData.STREAM_CODEC,
-                SpellReleaseData::serverHandler
+                new DirectionalPayloadHandler<>(
+                        SpellReleaseData::clientHandler,
+                        SpellReleaseData::serverHandler
+                )
         );
         registrar.playToClient(
                 NailLevelData.TYPE,

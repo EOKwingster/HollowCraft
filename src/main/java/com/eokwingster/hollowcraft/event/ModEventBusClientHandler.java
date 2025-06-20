@@ -8,13 +8,19 @@ import com.eokwingster.hollowcraft.client.particle.HCParticleTypes;
 import com.eokwingster.hollowcraft.client.particle.ShadeDeadParticle;
 import com.eokwingster.hollowcraft.client.particle.ShadeDyingParticle;
 import com.eokwingster.hollowcraft.world.entity.HCEntityTypes;
-import com.eokwingster.hollowcraft.world.entity.client.HCModelLayers;
-import com.eokwingster.hollowcraft.world.entity.client.model.ShadeModel;
-import com.eokwingster.hollowcraft.world.entity.client.renderer.ShadeRenderer;
+import com.eokwingster.hollowcraft.client.model.HCModelLayers;
+import com.eokwingster.hollowcraft.client.model.ShadeModel;
+import com.eokwingster.hollowcraft.client.renderer.ShadeRenderer;
+import com.eokwingster.hollowcraft.world.item.HCItems;
+import com.eokwingster.hollowcraft.world.item.NailItem;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
@@ -25,6 +31,11 @@ import static com.eokwingster.hollowcraft.HollowCraft.MODID;
 
 @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusClientHandler {
+    @SubscribeEvent
+    private static void onFMLClientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> ItemProperties.register(HCItems.NAIL.get(), ResourceLocation.fromNamespaceAndPath(MODID, "nail_state"), (ClampedItemPropertyFunction) NailItem::nailStateFunction));
+    }
+
     @SubscribeEvent
     private static void registerGuiLayers(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.AIR_LEVEL, HCGuiLayers.LOOKING_DIRECTION_INDICATOR, new LookingDirectionIndicator());

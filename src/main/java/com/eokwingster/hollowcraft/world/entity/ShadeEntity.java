@@ -1,9 +1,9 @@
-package com.eokwingster.hollowcraft.world.entity.entities;
+package com.eokwingster.hollowcraft.world.entity;
 
 import com.eokwingster.hollowcraft.client.particle.HCParticleTypes;
 import com.eokwingster.hollowcraft.client.sounds.HCSoundEvents;
 import com.eokwingster.hollowcraft.world.damagetype.HCDamageTypes;
-import com.eokwingster.hollowcraft.world.entity.client.animations.ShadeAnimations;
+import com.eokwingster.hollowcraft.client.animations.ShadeAnimations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;

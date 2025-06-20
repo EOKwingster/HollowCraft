@@ -2,8 +2,14 @@ package com.eokwingster.hollowcraft.world.item;
 
 import com.eokwingster.hollowcraft.HCConfig;
 import com.eokwingster.hollowcraft.client.gui.hud.LookingDirectionIndicator;
+import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
+import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -13,8 +19,18 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
+
+import static com.eokwingster.hollowcraft.HollowCraft.MODID;
+
 public class NailItem extends SwordItem {
-    public static boolean bounce = false;
+    public static final String TRANSLATABLE_ID_OLD_NAIL = Util.makeDescriptionId("item", ResourceLocation.fromNamespaceAndPath(MODID, "old_nail"));
+    public static final String TRANSLATABLE_ID_SHARPENED_NAIL = Util.makeDescriptionId("item", ResourceLocation.fromNamespaceAndPath(MODID, "sharpened_nail"));
+    public static final String TRANSLATABLE_ID_CHANNELLED_NAIL = Util.makeDescriptionId("item", ResourceLocation.fromNamespaceAndPath(MODID, "channelled_nail"));
+    public static final String TRANSLATABLE_ID_COILED_NAIL = Util.makeDescriptionId("item", ResourceLocation.fromNamespaceAndPath(MODID, "coiled_nail"));
+    public static final String TRANSLATABLE_ID_PURE_NAIL = Util.makeDescriptionId("item", ResourceLocation.fromNamespaceAndPath(MODID, "pure_nail"));
+
+    private static boolean bounce = false;
 
     public NailItem(Tier pTier, Properties pProperties) {
         super(pTier, pProperties.setNoRepair().fireResistant().rarity(Rarity.EPIC));
@@ -27,6 +43,13 @@ public class NailItem extends SwordItem {
 
     public static ItemAttributeModifiers createAttributes() {
         return SwordItem.createAttributes(HCTiers.NAIL, 0, HCConfig.nailAttackSpeed);
+    }
+
+    public static float nailStateFunction(ItemStack pStack, @Nullable ClientLevel pLevel, @Nullable LivingEntity pEntity, int pSeed) {
+        if (pEntity instanceof LocalPlayer player) {
+            return player.getData(HCAttachmentTypes.NAIL_LEVEL).getLevel() / 10.0F;
+        }
+        return 0.0F;
     }
 
     public static void tickNailBounce(LocalPlayer localPlayer) {
@@ -46,5 +69,17 @@ public class NailItem extends SwordItem {
             localPlayer.level().addParticle(ParticleTypes.SWEEP_ATTACK, x, y - 1D, z, 0D, 0D, 0D);
         }
         bounce = false;
+    }
+
+    @Override
+    public Component getName(ItemStack pStack) {
+        return switch (Minecraft.getInstance().player.getData(HCAttachmentTypes.NAIL_LEVEL).getLevel()) {
+            case 0 -> Component.translatable(TRANSLATABLE_ID_OLD_NAIL);
+            case 1 -> Component.translatable(TRANSLATABLE_ID_SHARPENED_NAIL);
+            case 2 -> Component.translatable(TRANSLATABLE_ID_CHANNELLED_NAIL);
+            case 3 -> Component.translatable(TRANSLATABLE_ID_COILED_NAIL);
+            case 4 -> Component.translatable(TRANSLATABLE_ID_PURE_NAIL);
+            default -> super.getName(pStack);
+        };
     }
 }

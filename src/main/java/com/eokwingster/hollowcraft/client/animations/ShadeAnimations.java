@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.world.entity.client.animations;// Save this class in your mod and generate all required imports
+package com.eokwingster.hollowcraft.client.animations;// Save this class in your mod and generate all required imports
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;

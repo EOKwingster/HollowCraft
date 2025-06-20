@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.world.entity.client;
+package com.eokwingster.hollowcraft.client.model;
 
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;

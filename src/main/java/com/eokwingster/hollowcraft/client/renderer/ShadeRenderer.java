@@ -1,8 +1,8 @@
-package com.eokwingster.hollowcraft.world.entity.client.renderer;
+package com.eokwingster.hollowcraft.client.renderer;
 
-import com.eokwingster.hollowcraft.world.entity.client.HCModelLayers;
-import com.eokwingster.hollowcraft.world.entity.client.model.ShadeModel;
-import com.eokwingster.hollowcraft.world.entity.entities.ShadeEntity;
+import com.eokwingster.hollowcraft.client.model.HCModelLayers;
+import com.eokwingster.hollowcraft.client.model.ShadeModel;
+import com.eokwingster.hollowcraft.world.entity.ShadeEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;

@@ -1,6 +1,5 @@
 package com.eokwingster.hollowcraft.world.entity;
 
-import com.eokwingster.hollowcraft.world.entity.entities.ShadeEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

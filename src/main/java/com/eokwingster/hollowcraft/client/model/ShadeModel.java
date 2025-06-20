@@ -1,10 +1,10 @@
-package com.eokwingster.hollowcraft.world.entity.client.model;// Made with Blockbench 4.12.4
+package com.eokwingster.hollowcraft.client.model;// Made with Blockbench 4.12.4
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
 
-import com.eokwingster.hollowcraft.world.entity.client.animations.ShadeAnimations;
-import com.eokwingster.hollowcraft.world.entity.entities.ShadeEntity;
+import com.eokwingster.hollowcraft.client.animations.ShadeAnimations;
+import com.eokwingster.hollowcraft.world.entity.ShadeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HierarchicalModel;

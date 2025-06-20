@@ -12,7 +12,7 @@ public class NailLevel implements INBTSerializable<CompoundTag> {
     private int level;
 
     public NailLevel() {
-        this.level = 0; // Default to no damage
+        this.level = 0;
     }
 
     public int getDamage() {
@@ -20,10 +20,7 @@ public class NailLevel implements INBTSerializable<CompoundTag> {
     }
 
     public void setLevel(int level) {
-        if (level < 0 || level >= LEVEL_DAMAGES.size()) {
-            throw new IllegalArgumentException("Invalid damage level: " + level + ". Must be between 0 and " + (LEVEL_DAMAGES.size() - 1) + ".");
-        }
-        this.level = level;
+        this.level = Math.clamp(level, 0, LEVEL_DAMAGES.size() - 1);
     }
 
     public boolean nextLevel() {
@@ -40,6 +37,10 @@ public class NailLevel implements INBTSerializable<CompoundTag> {
             return true;
         }
         return false;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     @Override
@@ -61,8 +62,6 @@ public class NailLevel implements INBTSerializable<CompoundTag> {
     public void readNBT(CompoundTag nbt) {
         if (nbt.contains("damageLevel")) {
             setLevel(nbt.getInt("damageLevel"));
-        } else {
-            throw new IllegalArgumentException("NBT does not contain 'damageLevel'");
         }
     }
 }
