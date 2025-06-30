@@ -1,8 +1,10 @@
-// 1.21	2025-06-19T18:36:35.124519	Item Models: hollowcraft
+// 1.21	2025-06-30T18:21:07.4373731	Item Models: hollowcraft
 45dcf23035a2b203d39b27b2b728663e5072368d assets/hollowcraft/models/item/channelled_nail.json
 9ea5aeb1ed11f4e08deee68ffe00d3085513d76d assets/hollowcraft/models/item/coiled_nail.json
+1f71f93ec9e64b53b7be1c99ac0ae826a67d924a assets/hollowcraft/models/item/dirtmouth_portal.json
 69ec78e14e41f3b44df43948a766ebbd347ffaea assets/hollowcraft/models/item/knight_skull.json
 7ed093c6f008772edcad0076b4685f5c7008c177 assets/hollowcraft/models/item/nail.json
+054c6a73add3a394d0b478eecbaf94b4a086eec8 assets/hollowcraft/models/item/overworld_portal.json
 a3ee2c7941968d3e6d8bf39fa5affdac1501a80d assets/hollowcraft/models/item/pure_nail.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/hollowcraft/models/item/shade_spawn_egg.json
 229fc4f7daef529efba084bdd3a106202bc8f726 assets/hollowcraft/models/item/sharpened_nail.json

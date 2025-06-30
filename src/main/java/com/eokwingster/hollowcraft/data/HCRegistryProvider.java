@@ -1,4 +1,4 @@
-package com.eokwingster.hollowcraft.data.registries;
+package com.eokwingster.hollowcraft.data;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

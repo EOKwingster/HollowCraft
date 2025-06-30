@@ -1,7 +1,8 @@
-package com.eokwingster.hollowcraft.data.model.item;
+package com.eokwingster.hollowcraft.data.model;
 
 import com.eokwingster.hollowcraft.world.item.HCItems;
 import com.eokwingster.hollowcraft.world.item.NailItem;
+import com.eokwingster.hollowcraft.world.level.block.portal_block.AbstractPortalBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +25,22 @@ public class HCItemModelProvider extends ItemModelProvider {
         nailItem(HCItems.NAIL.get());
         basicItem(HCItems.KNIGHT_SKULL.get());
         basicSpawnEgg(HCItems.SHADE_SPAWN_EGG.get());
+        portalBlockItem(HCItems.DIRTMOUTH_PORTAL.get());
+        portalBlockItem(HCItems.OVERWORLD_PORTAL.get());
+    }
+
+    private ItemModelBuilder portalBlockItem(Item portalBlock) {
+        ResourceLocation itemLoc = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(portalBlock));
+        return withExistingParent(
+                itemLoc.toString(),
+                "item/generated"
+        ).texture(
+                "layer0",
+                ResourceLocation.fromNamespaceAndPath(
+                        MODID,
+                        "block/" + itemLoc.getPath()
+                )
+        );
     }
 
     private ItemModelBuilder handheldItem(Item item, String textureName) {

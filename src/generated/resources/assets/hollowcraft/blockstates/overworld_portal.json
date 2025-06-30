@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "hollowcraft:block/overworld_portal_ns"
+    },
+    "axis=y": {
+      "model": "hollowcraft:block/overworld_portal_ud"
+    },
+    "axis=z": {
+      "model": "hollowcraft:block/overworld_portal_ew"
+    }
+  }
+}

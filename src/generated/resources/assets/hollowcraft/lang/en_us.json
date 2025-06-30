@@ -1,4 +1,6 @@
 {
+  "block.hollowcraft.dirtmouth_portal": "Dirtmouth Portal",
+  "block.hollowcraft.overworld_portal": "Overworld Portal",
   "commands.hollowCraft.getNailDamage": "Nail Damage: ",
   "commands.hollowCraft.getSoul": "Soul: ",
   "commands.hollowCraft.setNailLevel": "Nail Level set to: ",

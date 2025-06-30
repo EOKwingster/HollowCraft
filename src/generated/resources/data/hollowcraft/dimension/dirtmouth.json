@@ -1,0 +1,11 @@
+{
+  "type": "hollowcraft:dirtmouth",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "minecraft:badlands"
+    },
+    "settings": "minecraft:overworld"
+  }
+}

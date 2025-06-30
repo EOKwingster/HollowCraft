@@ -6,6 +6,7 @@ import com.eokwingster.hollowcraft.world.attachmentdata.HCAttachmentTypes;
 import com.eokwingster.hollowcraft.world.entity.HCEntityTypes;
 import com.eokwingster.hollowcraft.world.item.HCCreativeModeTabs;
 import com.eokwingster.hollowcraft.world.item.HCItems;
+import com.eokwingster.hollowcraft.world.level.block.HCBlocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -18,6 +19,7 @@ public class HollowCraft
 
     public HollowCraft(IEventBus bus, ModContainer modContainer) {
         HCCreativeModeTabs.CREATIVE_MODE_TABS.register(bus);
+        HCBlocks.BLOCKS.register(bus);
         HCItems.ITEMS.register(bus);
         HCAttachmentTypes.ATTACHMENT_TYPES.register(bus);
         HCSoundEvents.SOUND_EVENTS.register(bus);

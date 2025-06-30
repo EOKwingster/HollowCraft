@@ -1,9 +1,10 @@
 package com.eokwingster.hollowcraft.data;
 
+import com.eokwingster.hollowcraft.data.blockstates.HCBlockStateProvider;
 import com.eokwingster.hollowcraft.data.lang.HCLanguageProvider;
-import com.eokwingster.hollowcraft.data.model.item.HCItemModelProvider;
+import com.eokwingster.hollowcraft.data.model.HCBlockModelProvider;
+import com.eokwingster.hollowcraft.data.model.HCItemModelProvider;
 import com.eokwingster.hollowcraft.data.particle.HCParticleDescriptionProvider;
-import com.eokwingster.hollowcraft.data.registries.HCRegistryProvider;
 import com.eokwingster.hollowcraft.data.sounds.HCSoundDefinitionProvider;
 import com.eokwingster.hollowcraft.data.tags.HCBlockTagsProvider;
 import com.eokwingster.hollowcraft.data.tags.HCDamageTypeTagsProvider;
@@ -36,15 +37,17 @@ public class HCDataGenerator {
         //client
         generator.addProvider(client, new HCLanguageProvider(output, MODID, "en_us"));
         generator.addProvider(client, new HCItemModelProvider(output, MODID, exFileHelper));
+        generator.addProvider(client, new HCBlockModelProvider(output, MODID, exFileHelper));
+        generator.addProvider(client, new HCBlockStateProvider(output, MODID, exFileHelper));
         generator.addProvider(client, new HCSoundDefinitionProvider(output, MODID, exFileHelper));
         generator.addProvider(client, new HCParticleDescriptionProvider(output, exFileHelper));
 
         //server
+        HCRegistryProvider registryProvider = generator.addProvider(server, new HCRegistryProvider(output, lookupProvider, Set.of(MODID)));
+        lookupProvider = registryProvider.getRegistryProvider();
         HCBlockTagsProvider blockTagsProvider = generator.addProvider(server, new HCBlockTagsProvider(output, lookupProvider, MODID, exFileHelper));
         generator.addProvider(server, new HCItemTagsProvider(output, lookupProvider, blockTagsProvider.contentsGetter(), MODID, exFileHelper));
         generator.addProvider(server, new HCEntityTypeTagsProvider(output, lookupProvider, MODID, exFileHelper));
-        HCRegistryProvider registryProvider = generator.addProvider(server, new HCRegistryProvider(output, lookupProvider, Set.of(MODID)));
-        lookupProvider = registryProvider.getRegistryProvider();
         generator.addProvider(server, new HCDamageTypeTagsProvider(output, lookupProvider, MODID, exFileHelper));
     }
 }

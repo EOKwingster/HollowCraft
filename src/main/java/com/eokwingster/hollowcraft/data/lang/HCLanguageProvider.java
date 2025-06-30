@@ -4,6 +4,7 @@ import com.eokwingster.hollowcraft.client.keymapping.HCKeyMappings;
 import com.eokwingster.hollowcraft.world.item.HCCreativeModeTabs;
 import com.eokwingster.hollowcraft.world.item.HCItems;
 import com.eokwingster.hollowcraft.world.item.NailItem;
+import com.eokwingster.hollowcraft.world.level.block.HCBlocks;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -34,6 +35,10 @@ public class HCLanguageProvider extends LanguageProvider {
         add(NailItem.TRANSLATABLE_ID_CHANNELLED_NAIL, "Channelled Nail");
         add(NailItem.TRANSLATABLE_ID_COILED_NAIL, "Coiled Nail");
         add(NailItem.TRANSLATABLE_ID_PURE_NAIL, "Pure Nail");
+
+        //blocks
+        add(HCBlocks.DIRTMOUTH_PORTAL.get(), "Dirtmouth Portal");
+        add(HCBlocks.OVERWORLD_PORTAL.get(), "Overworld Portal");
 
         //messages
         add("network.hollowCraft.exception", "Network Exception!");
